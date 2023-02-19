@@ -4,21 +4,22 @@
 #   日期：2016-12-01
 #   作者：九茶<http://blog.csdn.net/bone_ace>
 # ------------------------------------------
-
 import sys
 import logging
 import datetime
 import requests
 import re
 from lxml import etree
+sys.path.append('../../')
+sys.path.append('../')
 from Sina_spider3.weiboID import weiboID
 from Sina_spider3.scrapy_redis.spiders import RedisSpider
 from scrapy.selector import Selector
 from scrapy.http import Request
 from Sina_spider3.items import TweetsItem, InformationItem, RelationshipsItem
-
+from importlib import reload
 reload(sys)
-sys.setdefaultencoding('utf8')
+#sys.setdefaultencoding('utf8')
 
 
 class Spider(RedisSpider):
@@ -98,9 +99,9 @@ class Spider(RedisSpider):
                             informationItem["Num_Follows"] = int(num_follows[0])
                         if num_fans:
                             informationItem["Num_Fans"] = int(num_fans[0])
-            except Exception, e:
+            except Exception as e:
                 pass
-        except Exception, e:
+        except Exception as e:
             pass
         else:
             yield informationItem
@@ -144,7 +145,7 @@ class Spider(RedisSpider):
                     if len(others) == 2:
                         tweetsItems["Tools"] = others[1].replace(u"\xa0", "")
                 yield tweetsItems
-            except Exception, e:
+            except Exception as e:
                 pass
 
         url_next = selector.xpath('body/div[@class="pa" and @id="pagelist"]/form/div/a[text()="下页"]/@href'.decode('utf8')).extract()

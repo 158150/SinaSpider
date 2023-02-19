@@ -66,7 +66,7 @@ class CookiesMiddleware(RetryMiddleware):
                         "Redirect to 'http://weibo.cn/pub'!( Account:%s )" % request.meta["accountText"].split("--")[0])
                 reason = response_status_message(response.status)
                 return self._retry(request, reason, spider) or response  # 重试
-            except Exception, e:
+            except Exception as e:
                 raise IgnoreRequest
         elif response.status in [403, 414]:
             logger.error("%s! Stopping..." % response.status)

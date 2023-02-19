@@ -1,6 +1,14 @@
 # encoding=utf-8
-import httplib, mimetypes, urlparse, json, time
+#将
+#import urlparse
+#my_url = urlparse.urlparse(url)
+#改为
 
+#from urllib import parse
+#my_url = parse.urlparse(url)
+
+import httplib, mimetypes, json, time
+from urllib import parse
 ######################################################################
 
 # 错误代码请查询 http://www.yundama.com/apidoc/YDM_ErrorCode.html
@@ -116,7 +124,7 @@ class YDMHttp:
 ######################################################################
 
 def post_url(url, fields, files=[]):
-    urlparts = urlparse.urlsplit(url)
+    urlparts = parse.urlsplit(url)
     return post_multipart(urlparts[1], urlparts[2], fields, files)
 
 
@@ -168,7 +176,7 @@ def get_content_type(filename):
 
 def identify():
     if (username == 'username'):
-        print '请设置好相关参数再测试'
+        print('请设置好相关参数再测试')
     else:
         # 初始化
         yundama = YDMHttp(username, password, appid, appkey)

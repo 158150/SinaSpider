@@ -98,7 +98,7 @@ def get_cookie_from_weibo_cn(account, password):
                 code = browser.find_element_by_name("code")
                 code.clear()
                 if IDENTIFY == 1:
-                    code_txt = raw_input("请查看路径下新生成的aa.png，然后输入验证码:")  # 手动输入验证码
+                    code_txt = input("请查看路径下新生成的aa.png，然后输入验证码:")  # 手动输入验证码
                 else:
                     from PIL import Image
                     img = browser.find_element_by_xpath('//form[@method="post"]/div/img[@alt="请打开图片显示"]')
@@ -108,7 +108,7 @@ def get_cookie_from_weibo_cn(account, password):
                     im.crop((x, y, 100 + x, y + 22)).save("ab.png")  # 剪切出验证码
                     code_txt = identify()  # 验证码打码平台识别
                 code.send_keys(code_txt)
-            except Exception, e:
+            except Exception as  e:
                 pass
 
             commit = browser.find_element_by_name("submit")
@@ -117,7 +117,7 @@ def get_cookie_from_weibo_cn(account, password):
             if "我的首页" not in browser.title:
                 time.sleep(4)
             if '未激活微博' in browser.page_source:
-                print '账号未开通微博'
+                print ('账号未开通微博')
                 return {}
 
         cookie = {}
@@ -126,13 +126,13 @@ def get_cookie_from_weibo_cn(account, password):
                 cookie[elem["name"]] = elem["value"]
             logger.warning("Get Cookie Success!( Account:%s )" % account)
         return json.dumps(cookie)
-    except Exception, e:
+    except Exception as  e:
         logger.warning("Failed %s!" % account)
         return ""
     finally:
         try:
             browser.quit()
-        except Exception, e:
+        except Exception as e:
             pass
 
 
